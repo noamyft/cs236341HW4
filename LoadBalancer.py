@@ -43,7 +43,7 @@ while True:
     connectionToServer.send(data)
 
     # transfer response to client
-    dataResponse = connectionToServer.recv()
+    dataResponse = connectionToServer.recv(1024)
     connectionToClient.send(dataResponse)
 
     connectionToClient.close()
