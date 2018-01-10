@@ -30,20 +30,22 @@ while True:
     print ( 'waiting for a connection')
     connectionToClient, client_address = clientsSock.accept()
 
-    print('connection from', client_address)
+    # print('connection from', client_address)
     data = connectionToClient.recv(2)
-    print('received "%s"' % data)
+    # print('received "%s"' % data)
     _, writable, _ = select.select([], serversSockets, [])
 
     # need to choose wisely the server to send to
     connectionToServer = writable[0]
 
     # send request to server
-    print ('sending "%s" to %s' % (data, connectionToServer.getpeername()))
+    # print ('sending "%s" to %s' % (data, connectionToServer.getpeername()))
     connectionToServer.send(data)
 
     # transfer response to client
     dataResponse = connectionToServer.recv(2)
     connectionToClient.send(dataResponse)
+
+    print ("forward ", data, " from: ", client_address, " to server: ", connectionToServer.getpeername())
 
     connectionToClient.close()
