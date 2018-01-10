@@ -11,7 +11,7 @@ for ip in serversIP:
     server_address = (ip, 80)
     print('connecting to %s port %s' % server_address)
     sock.connect(server_address)
-    serversIP.append(sock)
+    serversSockets.append(sock)
 
 # wait for clients
 # Create a TCP/IP socket
