@@ -39,7 +39,7 @@ while True:
     print("writeable: ", writable)
     print("readable: ", readable)
 
-    if not writable:
+    if writable:
         # need to choose wisely the server to send to
         connectionToServer = writable[0]
 
