@@ -39,13 +39,13 @@ while True:
     print("writeable: ", writable)
     print("readable: ", readable)
 
-    if writable:
+    if (writable):
         # need to choose wisely the server to send to
         connectionToServer = writable[0]
 
         # send request to server
-        # print ('sending "%s" to %s' % (data, connectionToServer.getpeername()))
-        connectionToServer.setblocking(0)
+        print ('sending "%s" to %s' % (data, connectionToServer.getpeername()))
+        # connectionToServer.setblocking(0)
         connectionToServer.send(data)
 
         openConnections[connectionToServer] = connectionToClient
@@ -54,7 +54,7 @@ while True:
     for readServer in readable:
         dataResponse = readServer.recv(2)
         returnTo = openConnections[readServer]
-        returnTo.setblocking(0)
+        # returnTo.setblocking(0)
         returnTo.send(dataResponse)
 
         print ("forward ", data, " from: ", returnTo.getpeername(), " to server: ", readServer.getpeername())
