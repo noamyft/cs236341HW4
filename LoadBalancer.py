@@ -1,6 +1,8 @@
 import socket
 import select
 
+openConnections = {}
+
 serversIP = ["192.168.0.101", "192.168.0.102", "192.168.0.103"]
 
 serversSockets = []
@@ -33,19 +35,26 @@ while True:
     # print('connection from', client_address)
     data = connectionToClient.recv(2)
     # print('received "%s"' % data)
-    _, writable, _ = select.select([], serversSockets, [])
+    readable, writable, _ = select.select(serversSockets, serversSockets, [])
 
     # need to choose wisely the server to send to
-    connectionToServer = writable[0]
+    if not writable:
+        connectionToServer = writable[0]
 
     # send request to server
     # print ('sending "%s" to %s' % (data, connectionToServer.getpeername()))
+    connectionToServer.setblocking(0)
     connectionToServer.send(data)
 
-    # transfer response to client
-    dataResponse = connectionToServer.recv(2)
-    connectionToClient.send(dataResponse)
+    openConnections[connectionToServer] = connectionToClient
 
-    print ("forward ", data, " from: ", client_address, " to server: ", connectionToServer.getpeername())
+    # transfer response to clients
+    for readServer in readable:
+        dataResponse = readServer.recv(2)
+        returnTo = openConnections[readServer]
+        returnTo.setblocking(0)
+        returnTo.send(dataResponse)
 
-    connectionToClient.close()
+        print ("forward ", data, " from: ", returnTo.getpeername(), " to server: ", readServer.getpeername())
+
+        returnTo.close()
