@@ -37,16 +37,17 @@ while True:
     # print('received "%s"' % data)
     readable, writable, _ = select.select(serversSockets, serversSockets, [])
 
-    # need to choose wisely the server to send to
+
     if not writable:
+        # need to choose wisely the server to send to
         connectionToServer = writable[0]
 
-    # send request to server
-    # print ('sending "%s" to %s' % (data, connectionToServer.getpeername()))
-    connectionToServer.setblocking(0)
-    connectionToServer.send(data)
+        # send request to server
+        # print ('sending "%s" to %s' % (data, connectionToServer.getpeername()))
+        connectionToServer.setblocking(0)
+        connectionToServer.send(data)
 
-    openConnections[connectionToServer] = connectionToClient
+        openConnections[connectionToServer] = connectionToClient
 
     # transfer response to clients
     for readServer in readable:
