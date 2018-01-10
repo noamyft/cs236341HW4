@@ -34,9 +34,10 @@ while True:
 
     # print('connection from', client_address)
     data = connectionToClient.recv(2)
-    # print('received "%s"' % data)
+    print('received "%s"' % data)
     readable, writable, _ = select.select(serversSockets, serversSockets, [])
-
+    print("writeable: ", writable)
+    print("readable: ", readable)
 
     if not writable:
         # need to choose wisely the server to send to
