@@ -20,15 +20,15 @@ clientsSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # Bind the socket to the port
 server_address = ('10.0.0.1', 80)
 print ('starting up on %s port %s' % server_address)
-sock.bind(server_address)
+clientsSock.bind(server_address)
 
 # Listen for incoming connections
-sock.listen(1)
+clientsSock.listen(1)
 
 while True:
     # Wait for a connection
     print ( 'waiting for a connection')
-    connectionToClient, client_address = sock.accept()
+    connectionToClient, client_address = clientsSock.accept()
 
     print('connection from', client_address)
     data = connectionToClient.recv(2)
