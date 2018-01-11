@@ -23,7 +23,7 @@ def peekServer(serversList, msg):
 
     if (msg[0] == "M"):
         if isServerAvailable[serversList[2]]:
-            return s
+            return serversList[2]
 
     # default case - choose someone
     for s in serversList:
@@ -98,7 +98,6 @@ while True:
             returnTo.close()
 
     if (writable):
-
         if (requestsQueue):
             # get next request
             connection, msg = requestsQueue[0]
