@@ -19,18 +19,18 @@ def peekServer(serversList, msg):
     if (msg[0] == "V" or msg[0] == "V"):
         for s in serversList[0:2]:
             if isServerAvailable[s]:
-                print(msg, " to ", s)
+                print(msg, " to ", s.getpeername())
                 return s
 
     if (msg[0] == "M"):
         if isServerAvailable[serversList[2]]:
             print(msg, " to ", serversList[2])
-            return serversList[2]
+            return serversList[2].getpeername()
 
     # default case - choose someone
     for s in serversList:
         if isServerAvailable[s]:
-            print(msg, " to ", s)
+            print(msg, " to ", s.getpeername())
             return s
 
     # all servers are busy
