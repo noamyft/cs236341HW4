@@ -15,10 +15,22 @@ isServerAvailable = {}
 handledConnections = {}
 
 
-def peekServer(serversList):
+def peekServer(serversList, msg):
+    if (msg[0] == "V" or msg[0] == "V"):
+        for s in serversList[0:2]:
+            if isServerAvailable[s]:
+                return s
+
+    if (msg[0] == "M"):
+        if isServerAvailable[serversList[2]]:
+            return s
+
+    # default case - choose someone
     for s in serversList:
         if isServerAvailable[s]:
             return s
+
+    # all servers are busy
     return None
 
 
@@ -86,13 +98,15 @@ while True:
             returnTo.close()
 
     if (writable):
+        # get next request
+        connection, msg = requestsQueue[0]
+
         # need to choose wisely the server to send to
-        connectionToServer = peekServer(writable)
+        connectionToServer = peekServer(serversSockets, msg)
 
         #send meassage from queue
         if ((connectionToServer is not None) and requestsQueue):
-            # pop next request from queue
-            connection, msg = requestsQueue[0]
+            # remove next request from queue
             requestsQueue.remove((connection, msg))
 
             # handle request
