@@ -98,21 +98,23 @@ while True:
             returnTo.close()
 
     if (writable):
-        # get next request
-        connection, msg = requestsQueue[0]
 
-        # need to choose wisely the server to send to
-        connectionToServer = peekServer(serversSockets, msg)
+        if (requestsQueue):
+            # get next request
+            connection, msg = requestsQueue[0]
 
-        #send meassage from queue
-        if ((connectionToServer is not None) and requestsQueue):
-            # remove next request from queue
-            requestsQueue.remove((connection, msg))
+            # need to choose wisely the server to send to
+            connectionToServer = peekServer(serversSockets, msg)
 
-            # handle request
-            handledConnections[connectionToServer] = connection
-            isServerAvailable[connectionToServer] = False
-            connectionToServer.send(msg)
+            #send meassage from queue
+            if (connectionToServer is not None):
+                # remove next request from queue
+                requestsQueue.remove((connection, msg))
+
+                # handle request
+                handledConnections[connectionToServer] = connection
+                isServerAvailable[connectionToServer] = False
+                connectionToServer.send(msg)
 
     # if (writable):
     #
