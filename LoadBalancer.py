@@ -92,7 +92,7 @@ while True:
             returnTo = handledConnections[read]
             returnTo.send(dataResponse)
 
-            print("server %s free" % read.getpeername())
+            print("server ", read.getpeername(), " free")
             # notify that server is enable
             isServerAvailable[read] = True
             # remove connection and close it
