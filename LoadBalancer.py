@@ -16,7 +16,7 @@ handledConnections = {}
 
 
 def peekServer(serversList, msg):
-    if (msg[0] == "V" or msg[0] == "V"):
+    if msg[0] == "P" or msg[0] == "V":
         for s in serversList[0:2]:
             if isServerAvailable[s]:
                 print(msg, " to ", s.getpeername())
