@@ -92,8 +92,6 @@ while True:
             returnTo = handledConnections[read]
             returnTo.send(dataResponse)
 
-            print("forward ", data, " from: ", returnTo.getpeername(), " to server: ", read.getpeername())
-
             # notify that server is enable
             isServerAvailable[read] = True
             # remove connection and close it
@@ -112,6 +110,8 @@ while True:
             if (connectionToServer is not None):
                 # remove next request from queue
                 requestsQueue.remove((connection, msg))
+
+                print("forward %s from: %s to server: %s" % (msg, connection.getpeername(), connectionToServer.getpeername()))
 
                 # handle request
                 handledConnections[connectionToServer] = connection
