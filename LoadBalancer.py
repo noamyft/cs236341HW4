@@ -73,7 +73,7 @@ while True:
         if read is listeningSock:
             # add new connection to list
             connectionToClient, client_address = listeningSock.accept()
-            connectionToClient.setblocking(0)
+            # connectionToClient.setblocking(0)
             clientsOpenedSockets.append(connectionToClient)
         elif read in clientsOpenedSockets:
             # recieve request and store it in queue
