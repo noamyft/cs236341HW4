@@ -24,8 +24,8 @@ def peekServer(serversList, msg):
 
     if (msg[0] == "M"):
         if isServerAvailable[serversList[2]]:
-            print(msg, " to ", serversList[2])
-            return serversList[2].getpeername()
+            print(msg, " to ", serversList[2].getpeername())
+            return serversList[2]
 
     # default case - choose someone
     for s in serversList:
