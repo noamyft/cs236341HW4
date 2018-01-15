@@ -19,18 +19,18 @@ def peekServer(serversList, msg):
     if msg[0] == "P" or msg[0] == "V":
         for s in serversList[0:2]:
             if isServerAvailable[s]:
-                print(msg, " to ", s.getpeername())
+                # print(msg, " to ", s.getpeername())
                 return s
 
     if (msg[0] == "M"):
         if isServerAvailable[serversList[2]]:
-            print(msg, " to ", serversList[2].getpeername())
+            # print(msg, " to ", serversList[2].getpeername())
             return serversList[2]
 
     # default case - choose someone
     for s in serversList:
         if isServerAvailable[s]:
-            print(msg, " to ", s.getpeername())
+            # print(msg, " to ", s.getpeername())
             return s
 
     # all servers are busy
@@ -57,16 +57,8 @@ listeningSock.bind(server_address)
 listeningSock.listen(1)
 
 while True:
-    # Wait for a connection
-    # print ( 'waiting for a connection')
-    # connectionToClient, client_address = clientsSock.accept()
 
-    # print('connection from', client_address)
-
-    # print('received "%s"' % data)
     readable, writable, _ = select.select(serversSockets + clientsOpenedSockets + [listeningSock], serversSockets, [])
-    # print("writeable: ", writable)
-    # print("readable: ", readable)
 
     # transfer response to clients
     for read in readable:
@@ -92,7 +84,7 @@ while True:
             returnTo = handledConnections[read]
             returnTo.send(dataResponse)
 
-            print("server ", read.getpeername(), " free")
+            # print("server ", read.getpeername(), " free")
             # notify that server is enable
             isServerAvailable[read] = True
             # remove connection and close it
@@ -118,15 +110,3 @@ while True:
                 handledConnections[connectionToServer] = connection
                 isServerAvailable[connectionToServer] = False
                 connectionToServer.send(msg)
-
-    # if (writable):
-    #
-    #     # need to choose wisely the server to send to
-    #     connectionToServer = p[0]
-    #
-    #     # send request to server
-    #     print ('sending "%s" to %s' % (data, connectionToServer.getpeername()))
-    #     # connectionToServer.setblocking(0)
-    #     connectionToServer.send(data)
-    #
-    #     handledConnections[connectionToServer] = connectionToClient
