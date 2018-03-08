@@ -9,6 +9,7 @@ server_address = ('localhost', 10000)
 print ( 'connecting to %s port %s' % server_address)
 sock.connect(server_address)
 
+
 try:
 
     # Send data
